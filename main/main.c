@@ -14,6 +14,7 @@
 #include "esp_system.h"
 #include "esp_wifi.h"
 #include "esp_netif.h"
+#include "../wifiStation/wifiStation.h"
 
 #define LOCAL_ESP_WIFI_SSID         CONFIG_ESP_WIFI_SSID
 #define LOCAL_ESP_WIFI_PASS         CONFIG_ESP_WIFI_PASSWORD
@@ -21,13 +22,12 @@
 
 void app_main(void)
 {
-
+    ESP_ERROR_CHECK(esp_netif_init());
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
+    
 
     printf("Restarting now.\n");
     fflush(stdout);
     esp_restart();
 }
 
-void init_wifi_station() {
-    
-}
