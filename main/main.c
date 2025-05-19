@@ -9,17 +9,24 @@
 #include "sdkconfig.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "esp_system.h"
+#include "esp_event.h"
+#include "esp_log.h"
 #include "esp_chip_info.h"
 #include "esp_flash.h"
 #include "esp_system.h"
 #include "esp_wifi.h"
 #include "esp_netif.h"
-#include "wifiStation.h"
 #include "nvs_flash.h"
 
-#define LOCAL_ESP_WIFI_SSID         CONFIG_ESP_WIFI_SSID
-#define LOCAL_ESP_WIFI_PASS         CONFIG_ESP_WIFI_PASSWORD
-#define WIFI_ESP_MAXIMUM_RETRY      CONFIG_ESP_MAXIMUM_RETRY
+#include "lwip/err.h"
+#include "lwip/sockets.h"
+#include "lwip/sys.h"
+#include <lwip/netdb.h>
+
+#include "wifiStation.h"
+#include "tcp_socket_server.h"
+
 
 void app_main(void)
 {
@@ -37,13 +44,7 @@ void app_main(void)
     init_wifi_station();
 
 
-    printf("Restarting now.\n");
-    for (int i = 10; i >= 0; i--) {
-        printf("Restarting in %d seconds...\n", i);
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-    }
-
-    fflush(stdout);
-    esp_restart();
+    xTaskCreate(connectClient, "tcp_server", 4096, (void*)AF_INET, 5, NULL);
+    
 }
 

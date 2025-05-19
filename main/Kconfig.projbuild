@@ -65,3 +65,32 @@ menu "ESPConnect Configuration"
     endchoice
 
 endmenu
+
+menu "TCP Server Configuration"
+
+        config PORT
+            int "Port"
+            range 0 65535
+            default 3333
+            help
+                Local port the example server will listen on.
+
+        config KEEPALIVE_IDLE
+            int "TCP keep-alive idle time(s)"
+            default 5
+            help
+                Keep-alive idle time. In idle time without receiving any data from peer, will send keep-alive probe packet
+
+        config KEEPALIVE_INTERVAL
+            int "TCP keep-alive interval time(s)"
+            default 5
+            help
+                Keep-alive probe packet interval time.
+
+        config KEEPALIVE_COUNT
+            int "TCP keep-alive packet retry send counts"
+            default 3
+            help
+                Keep-alive probe packet retry count.
+        
+endmenu
