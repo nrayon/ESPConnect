@@ -1,5 +1,64 @@
 menu "ESPConnect Configuration"
 
+
+    menu "TCP Server Configuration"
+
+        config PORT
+            int "Port"
+            range 0 65535
+            default 3333
+            help
+                Local port the example server will listen on.
+
+        config KEEPALIVE_IDLE
+            int "TCP keep-alive idle time(s)"
+            default 5
+            help
+                Keep-alive idle time. In idle time without receiving any data from peer, will send keep-alive probe packet
+
+        config KEEPALIVE_INTERVAL
+            int "TCP keep-alive interval time(s)"
+            default 5
+            help
+                Keep-alive probe packet interval time.
+
+        config KEEPALIVE_COUNT
+            int "TCP keep-alive packet retry send counts"
+            default 3
+            help
+                Keep-alive probe packet retry count.
+        
+    endmenu
+
+
+    menu "LED  Configuration"
+
+        config ENV_GPIO_RANGE_MIN
+        int
+        default 0
+
+        config ENV_GPIO_RANGE_MAX
+            int
+            default 39
+
+        config ENV_GPIO_IN_RANGE_MAX
+            int
+            default ENV_GPIO_RANGE_MAX
+
+        config ENV_GPIO_OUT_RANGE_MAX
+            int
+            default 33
+
+        config GPIO_NUMBER
+            int "GPIO Pin Number"
+            range ENV_GPIO_RANGE_MIN ENV_GPIO_OUT_RANGE_MAX
+            default 2
+            help
+                GPIO number (IOxx) to switch on and off the LED.
+                Some GPIOs are used for other purposes (flash connections, etc.) and cannot be switched on and off.
+
+    endmenu
+
     config ESP_WIFI_SSID
         string "WiFi SSID"
         default "myssid"
@@ -66,31 +125,3 @@ menu "ESPConnect Configuration"
 
 endmenu
 
-menu "TCP Server Configuration"
-
-        config PORT
-            int "Port"
-            range 0 65535
-            default 3333
-            help
-                Local port the example server will listen on.
-
-        config KEEPALIVE_IDLE
-            int "TCP keep-alive idle time(s)"
-            default 5
-            help
-                Keep-alive idle time. In idle time without receiving any data from peer, will send keep-alive probe packet
-
-        config KEEPALIVE_INTERVAL
-            int "TCP keep-alive interval time(s)"
-            default 5
-            help
-                Keep-alive probe packet interval time.
-
-        config KEEPALIVE_COUNT
-            int "TCP keep-alive packet retry send counts"
-            default 3
-            help
-                Keep-alive probe packet retry count.
-        
-endmenu

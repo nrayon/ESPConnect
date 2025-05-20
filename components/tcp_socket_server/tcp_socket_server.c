@@ -23,6 +23,9 @@ static void retransmit_bytes(const int sock)
             rx_buffer[len] = 0; // Null-terminate whatever is received and treat it like a string
             ESP_LOGI(TAG, "Received %d bytes: %s", len, rx_buffer);
 
+            post_led_switch_event();
+            ESP_LOGI(TAG, "Sent event to event handler");
+
             // send() can return less bytes than supplied length.
             // Walk-around for robust implementation.
             int to_write = len;
